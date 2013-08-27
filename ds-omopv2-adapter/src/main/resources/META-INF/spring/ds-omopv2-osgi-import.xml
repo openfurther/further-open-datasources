@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) [2013] [The FURTHeR Project]
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+	xmlns:ctx="http://www.springframework.org/schema/context" xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/osgi-compendium
+	http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd
+	http://www.springframework.org/schema/osgi
+    http://www.springframework.org/schema/osgi/spring-osgi.xsd
+    ">
+
+	<!-- =========================================== -->
+	<!-- Library imports -->
+	<!-- =========================================== -->
+
+	<import
+		resource="classpath:META-INF/core/util/core-util-property-editors-context.xml" />
+	<import resource="classpath:META-INF/core/util/core-util-encryption-sha1.xml" />
+
+
+	<!-- definitions using elements of the osgi namespace can be included in 
+		this file. There is no requirement to keep these definitions in a separate 
+		file if you do not want to. The rationale for keeping these definitions separate 
+		is to facilitate integration testing of the bundle outside of an OSGi container -->
+
+	<!-- =========================================== -->
+	<!-- Property placeholder configuration -->
+	<!-- =========================================== -->
+
+	<!-- Encryptable property placeholder configurer -->
+	<bean parent="propertiesEncryptor">
+		<property name="properties" ref="dsOmopv2" />
+	</bean>
+
+	<!-- Create an alias for initializer properties autowiring -->
+	<alias name="dsOmopv2" alias="dsProperties" />
+
+	<!-- Configuration Admin entry -->
+	<osgix:cm-properties id="dsOmopv2" persistent-id="further.ds.omopv2">
+		<!-- Add default property values here. Can be overridden by the file specified 
+			by persistent-id -->
+		<!-- TODO: Change namespaceId to real namespace id -->
+		<prop key="ds.namespaceId">3</prop>
+		<prop key="ds.name">OMOP Adapter</prop>
+		<prop key="ds.description">Generic OMOP Data Source Adapter</prop>
+		<prop key="ds.status">INACTIVE</prop>
+
+		<!-- ################################## -->
+		<!-- Database configuration -->
+		<!-- ################################## -->
+
+		<prop key="datasource.name">ds-omopv2-datasource</prop>
+		<prop key="datasource.url"></prop>
+		<prop key="datasource.driver"></prop>
+		<prop key="datasource.user"></prop>
+		<prop key="datasource.password"></prop>
+		<prop key="hibernate.dialect"></prop>
+		<!--
+			Note: this might not work with hbm2ddl create/update. See
+			https://forum.hibernate.org/viewtopic.php?t=927555&highlight=
+		-->
+		<prop key="hibernate.default_schema"></prop>
+
+		<!-- ============================ -->
+		<!-- Oracle config -->
+		<!-- ============================ -->
+
+		<prop key="oracle.net.readTimeout">2000</prop>
+		<prop key="oracle.net.connectTimeout">2000</prop>
+
+		<!-- ################################## -->
+		<!-- Hibernate configuration -->
+		<!-- ################################## -->
+
+		<!-- ============================ -->
+		<!-- Hibernate options -->
+		<!-- ============================ -->
+
+		<!-- Turn on for SQL debugging -->
+		<prop key="hibernate.show_sql">false</prop>
+		<!-- Required for efficient batch processing -->
+		<prop key="hibernate.jdbc.batch_size">20</prop>
+
+		<!-- Session factory configuration -->
+		<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate3.SpringSessionContext
+		</prop>
+		<prop key="hibernate.transaction.factory_class">org.springframework.orm.hibernate3.SpringTransactionFactory
+		</prop>
+
+		<!-- ============================ -->
+		<!--C3P0 connection pool config -->
+		<!-- ============================ -->
+
+		<!-- References for setting parameter values: http://www.hibernate.org/214.html -->
+		<!-- http://forum.java.sun.com/thread.jspa?threadID=691105&tstart=0 -->
+		<!-- Times are in seconds. -->
+		<prop key="c3p0.initialPoolSize"></prop>
+		<prop key="c3p0.minPoolSize"></prop>
+		<prop key="c3p0.maxPoolSize"></prop>
+		<prop key="c3p0.maxStatements">50</prop>
+		<prop key="c3p0.acquireRetryAttempts">30</prop>
+		<prop key="c3p0.acquireIncrement"></prop>
+		<prop key="c3p0.testConnectionOnCheckin">true</prop>
+		<prop key="c3p0.preferredTestQuery"></prop>
+		<prop key="c3p0.idleConnectionTestPeriod">150</prop>
+		<prop key="c3p0.maxIdleTime">1800</prop>
+
+		<!-- Request Chain Unmarshalling Attr -->
+		<prop key="edu.utah.further.ds.api.util.AttributeName.UNMARSHAL_PKG">edu.utah.further.fqe.model.impl.converter</prop>
+		<prop key="edu.utah.further.ds.api.util.AttributeName.RESULT_TRANSLATION">REPLACE_ME</prop>
+		<prop key="edu.utah.further.ds.api.util.AttributeName.RESULT_SCHEMA">REPLACE_ME</prop>
+		<prop key="edu.utah.further.ds.api.util.AttributeName.QUERY_SCHEMA">edu/utah/further/core/query/schema/further-searchquery-1.0.xsd
+		</prop>
+
+		<prop key="edu.utah.further.link.master.namespaceId">32774</prop>
+	</osgix:cm-properties>
+
+	<!-- =========================================== -->
+	<!-- Imported OSGi services -->
+	<!-- =========================================== -->
+
+	<!-- Pooled connection factory configured and started by ActiveMq. See activemq-broker.xml -->
+	<osgi:reference id="pooledConnectionFactory" interface="javax.jms.ConnectionFactory" />
+
+	<!-- ##################### -->
+	<!-- Query Processors -->
+	<!-- ##################### -->
+	<!-- Various data query and miscellaneous processors. Note: these beans 
+		might need be of prototype-scope if used more than once in a query life cycle 
+		(FUR-550). -->
+
+	<osgi:reference id="qpMonitorAdvice" bean-name="qpMonitorAdvice"
+		interface="edu.utah.further.ds.api.advice.RequestProcessorAroundAdvice"
+		context-class-loader="service-provider" />
+
+	<!-- bean-name is used to filter the correct OSGi service, do not remove 
+		it since there are multiple exports of the same interface (mocks and impls) -->
+
+	<osgi:reference id="mockInitializerQp" bean-name="mockInitializerQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor" />
+
+	<osgi:reference id="mockValidatorQp" bean-name="mockValidatorQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor" />
+
+	<osgi:reference id="mockQueryTranslatorQp" bean-name="mockQueryTranslatorQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor" />
+
+	<osgi:reference id="mockExecutionQp" bean-name="mockExecutionQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor" />
+
+	<osgi:reference id="mockResultTranslatorQp" bean-name="mockResultTranslatorQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor" />
+
+	<osgi:reference id="mockFinalizerQp" bean-name="mockFinalizerQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor" />
+
+	<!-- For sleep request processor -->
+	<osgi:reference id="randomUtilService"
+		interface="edu.utah.further.core.util.math.random.RandomUtilService" />
+
+</beans>
