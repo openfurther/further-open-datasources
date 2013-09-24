@@ -64,7 +64,7 @@
 		<prop key="ds.namespaceId">3</prop>
 		<prop key="ds.name">OMOP Adapter</prop>
 		<prop key="ds.description">Generic OMOP Data Source Adapter</prop>
-		<prop key="ds.status">INACTIVE</prop>
+		<prop key="ds.status">ACTIVE</prop>
 
 		<!-- ################################## -->
 		<!-- Database configuration -->
@@ -133,7 +133,6 @@
 		<prop key="edu.utah.further.ds.api.util.AttributeName.QUERY_SCHEMA">edu/utah/further/core/query/schema/further-searchquery-1.0.xsd
 		</prop>
 
-		<prop key="edu.utah.further.link.master.namespaceId">32774</prop>
 	</osgix:cm-properties>
 
 	<!-- =========================================== -->
@@ -156,27 +155,5 @@
 
 	<!-- bean-name is used to filter the correct OSGi service, do not remove 
 		it since there are multiple exports of the same interface (mocks and impls) -->
-
-	<osgi:reference id="mockInitializerQp" bean-name="mockInitializerQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
-
-	<osgi:reference id="mockValidatorQp" bean-name="mockValidatorQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
-
-	<osgi:reference id="mockQueryTranslatorQp" bean-name="mockQueryTranslatorQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
-
-	<osgi:reference id="mockExecutionQp" bean-name="mockExecutionQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
-
-	<osgi:reference id="mockResultTranslatorQp" bean-name="mockResultTranslatorQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
-
-	<osgi:reference id="mockFinalizerQp" bean-name="mockFinalizerQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
-
-	<!-- For sleep request processor -->
-	<osgi:reference id="randomUtilService"
-		interface="edu.utah.further.core.util.math.random.RandomUtilService" />
 
 </beans>
