@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) [2013] [The FURTHeR Project] Licensed under the Apache 
-	License, Version 2.0 (the "License"); you may not use this file except in 
-	compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
-	Unless required by applicable law or agreed to in writing, software distributed 
-	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
-	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
-	the specific language governing permissions and limitations under the License. -->
+<!--
+
+    Copyright (C) [2013] [The FURTHeR Project]
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
@@ -56,16 +66,36 @@
 			<list>
 				<!-- Initializer must always be the first processor to create the data 
 					source's query context -->
-				<ref bean="mockInitializerQp" />
-				<ref bean="randomSleep" />
-				<ref bean="mockValidatorQp" />
-				<ref bean="randomSleep" />
-				<ref bean="mockQueryTranslatorQp" />
-				<ref bean="randomSleep" />
-				<ref bean="mockExecutionQp" />
-				<ref bean="randomSleep" />
-				<ref bean="mockResultTranslatorQp" />
-				<ref bean="randomSleep" />
+				<ref bean="initializerQp" />
+				<ref bean="queryTranslatorQp" />
+				<ref bean="associatedResultQp"/>
+				<ref bean="queryExecutorQp" />
+				<!-- Result paging loop -->
+				<bean class="edu.utah.further.core.chain.PagingRequestProcessorImpl"
+					p:pageSize="200" p:sourceAttr-ref="queryResultAttr"
+					p:pagingControllerAttr-ref="pagingControllerAttr">
+					<property name="iterableType">
+						<util:constant
+							static-field="edu.utah.further.core.api.collections.page.IterableType.SCROLLABLE_RESULTS" />
+					</property>
+					<property name="mainLoop">
+						<list>
+							<ref bean="resultTranslatorQp" />
+							<ref bean="persistenceRp" />
+							<ref bean="pageFinalizerHibernateQp" /> <!-- FUR-1135, FUR-1286 -->
+						</list>
+					</property>
+					<property name="pagerFactory">
+						<bean
+							class="edu.utah.further.core.util.collections.page.DefaultPagerFactory">
+							<property name="providers">
+								<list>
+									<ref bean="pagingProviderHibernate" />
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
 				<ref bean="mockFinalizerQp" />
 			</list>
 		</property>
@@ -84,13 +114,6 @@
 		</property>
 	</bean>
 
-	<!-- =========================================== -->
-	<!-- Life cycle services -->
-	<!-- =========================================== -->
-
-	<!-- Various data query and miscellaneous processors. Note: these beans 
-		might need be of prototype-scope if used more than once in a query life cycle -->
-
 	<!-- Initializer -->
 
 	<bean id="intializerQp"
@@ -102,16 +125,16 @@
 		<entry key="SESSION_FACTORY" value-ref="sessionFactory" />
 		<entry key="SEARCH_QUERY_PKG" value="edu.utah.further.ds.omop.v2.domain" />
 		<entry key="RESULT_CONTEXT" value-ref="resultContext" />
+		<entry key="UNMARSHAL_PKG" value="edu.utah.further.ds.further.model.impl.domain" />
+		<entry key="RESULT_TRANSLATION" value="result/frtCall.xq" />
+		<entry key="QUERY_TRANSLATION" value="query/fqtCall.xq" />
+		<entry key="QUERY_SCHEMA"
+			value="edu/utah/further/core/query/schema/further-searchquery-1.0.xsd" />
 	</util:map>
-
-	<util:list id="attributeList">
-		<ref bean="dsProperties" />
-		<ref bean="namedAttributes" />
-	</util:list>
 
 	<bean id="defaultInitializer"
 		class="edu.utah.further.ds.api.service.query.logic.DefaultInitializer">
-		<property name="attributeList" ref="attributeList"></property>
+		<property name="namedAttributes" ref="namedAttributes" />
 		<property name="answerableService" ref="answerableService" />
 	</bean>
 
