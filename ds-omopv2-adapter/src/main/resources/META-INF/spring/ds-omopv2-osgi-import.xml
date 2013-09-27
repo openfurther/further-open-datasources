@@ -61,7 +61,7 @@
 		<!-- Add default property values here. Can be overridden by the file specified 
 			by persistent-id -->
 		<!-- TODO: Change namespaceId to real namespace id -->
-		<prop key="ds.namespaceId">3</prop>
+		<prop key="ds.namespaceId"></prop>
 		<prop key="ds.name">OMOP Adapter</prop>
 		<prop key="ds.description">Generic OMOP Data Source Adapter</prop>
 		<prop key="ds.status">ACTIVE</prop>
@@ -112,19 +112,24 @@
 		<!--C3P0 connection pool config -->
 		<!-- ============================ -->
 
+		<!-- ============================ -->
+		<!--C3P0 connection pool config -->
+		<!-- ============================ -->
+
 		<!-- References for setting parameter values: http://www.hibernate.org/214.html -->
 		<!-- http://forum.java.sun.com/thread.jspa?threadID=691105&tstart=0 -->
 		<!-- Times are in seconds. -->
-		<prop key="c3p0.initialPoolSize"></prop>
-		<prop key="c3p0.minPoolSize"></prop>
-		<prop key="c3p0.maxPoolSize"></prop>
+		<prop key="c3p0.initialPoolSize">5</prop>
+		<prop key="c3p0.minPoolSize">5</prop>
+		<prop key="c3p0.maxPoolSize">15</prop>
 		<prop key="c3p0.maxStatements">50</prop>
 		<prop key="c3p0.acquireRetryAttempts">30</prop>
-		<prop key="c3p0.acquireIncrement"></prop>
+		<prop key="c3p0.acquireIncrement">5</prop>
 		<prop key="c3p0.testConnectionOnCheckin">true</prop>
-		<prop key="c3p0.preferredTestQuery"></prop>
+		<!-- Timeout: [1] set it to 100, if that doesn't work, [2] set it to 10. -->
 		<prop key="c3p0.idleConnectionTestPeriod">150</prop>
 		<prop key="c3p0.maxIdleTime">1800</prop>
+		<prop key="c3p0.preferredTestQuery"></prop>
 
 	</osgix:cm-properties>
 

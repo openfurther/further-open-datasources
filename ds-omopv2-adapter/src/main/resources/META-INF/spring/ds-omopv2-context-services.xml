@@ -116,7 +116,7 @@
 
 	<!-- Initializer -->
 
-	<bean id="intializerQp"
+	<bean id="initializerQp"
 		class="edu.utah.further.ds.impl.service.query.processor.InitializerQp"
 		p:delegate-ref="defaultInitializer" scope="prototype" />
 

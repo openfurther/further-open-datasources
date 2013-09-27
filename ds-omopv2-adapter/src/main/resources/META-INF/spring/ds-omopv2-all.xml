@@ -35,13 +35,13 @@
 	<!-- Context files -->
 	<!-- =========================================== -->
 
-	<!-- Mandatory imports if we are to build upon the standard data source 
-		template -->
+	<!--
+		Mandatory imports if we are to build upon the standard data source
+		template
+	-->
 	<import resource="classpath:META-INF/ds/jms/ds-jms-context-route.xml" />
-	<import
-		resource="classpath:META-INF/ds/impl/ds-impl-context-lifecycle-meta-data.xml" />
-	<import
-		resource="classpath:META-INF/ds/impl/ds-impl-context-lifecycle-remote-control.xml" />
+	<import resource="classpath:META-INF/ds/impl/ds-impl-context-attributes.xml" />
+	<import resource="classpath:META-INF/ds/impl/ds-impl-context-lifecycle-meta-data.xml" />
 
 	<import resource="ds-omopv2-osgi-import.xml" />
 	<import resource="ds-omopv2-context-aop.xml" />
