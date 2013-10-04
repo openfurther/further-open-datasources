@@ -98,15 +98,19 @@
 			<!-- May need to be replaced by a edu.utah.further.core.util.io.ResourceMatchingFactoryBean 
 				factory bean if this list gets too large. -->
 			<list>
-				<value>edu.utah.further.ds.omop.v2.domain.ConditionEra</value>
-				<value>edu.utah.further.ds.omop.v2.domain.ConditionOccurrence</value>
-				<value>edu.utah.further.ds.omop.v2.domain.Observation</value>
-				<value>edu.utah.further.ds.omop.v2.domain.ObservationPeriod</value>
-				<value>edu.utah.further.ds.omop.v2.domain.DrugEra</value>
-				<value>edu.utah.further.ds.omop.v2.domain.DrugExposure</value>
-				<value>edu.utah.further.ds.omop.v2.domain.Person</value>
-				<value>edu.utah.further.ds.omop.v2.domain.VisitOccurrence</value>
-				<value>edu.utah.further.ds.omop.v2.domain.ProcedureOccurence</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.ConditionEra</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.ConditionOccurrence</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.ConditionOccurrenceRef</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.Observation</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.ObservationPeriod</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.ObservationTypeRef</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.DrugEra</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.DrugExposure</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.DrugExposureRef</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.Person</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.VisitOccurrence</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.ProcedureOccurrence</value>
+				<value>edu.utah.further.ds.omop.model.v2.domain.ProcedureOccurrenceRef</value>
 			</list>
 		</property>
 	</bean>

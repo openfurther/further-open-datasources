@@ -20,7 +20,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:camel="http://camel.apache.org/schema/spring"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:core="http://further.utah.edu/schema/core"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -33,10 +34,14 @@
 	http://www.springframework.org/schema/jee
 	http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
 	http://camel.apache.org/schema/spring
-	http://camel.apache.org/schema/spring/camel-spring.xsd">
+	http://camel.apache.org/schema/spring/camel-spring.xsd
+	http://further.utah.edu/schema/core
+	http://further.utah.edu/schema/core/core.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 	<!-- =========================================== -->
-	<!-- Life cycle management                       -->
+	<!-- Life cycle management -->
 	<!-- =========================================== -->
 
 	<!-- Life cycle manager/controller -->
@@ -45,12 +50,13 @@
 		<property name="lifeCycleMap">
 			<map>
 				<entry key="DATA_QUERY" value-ref="dataQueryLifeCycle" />
+				<entry key="COUNT_QUERY" value-ref="countQueryLifeCycle" />
 			</map>
 		</property>
 	</bean>
 
 	<!-- =========================================== -->
-	<!-- Life cycle implementation                   -->
+	<!-- Life cycle implementation -->
 	<!-- =========================================== -->
 
 	<!-- Data query flow -->
@@ -58,40 +64,98 @@
 		<property name="metadataRetriever" ref="metaDataService" />
 		<property name="requestProcessors">
 			<list>
-				<!--
-					Initializer must always be the first processor to create the data
-					source's query context
-				-->
-				<ref bean="mockInitializerQp" />
-				<ref bean="randomSleep" />
-				<ref bean="mockValidatorQp" />
-				<ref bean="randomSleep" />
-				<ref bean="mockQueryTranslatorQp" />
-				<ref bean="randomSleep" />
-				<ref bean="mockExecutionQp" />
-				<ref bean="randomSleep" />
-				<ref bean="mockResultTranslatorQp" />
-				<ref bean="randomSleep" />
+				<!-- Initializer must always be the first processor to create the data 
+					source's query context -->
+				<ref bean="initializerQp" />
+				<ref bean="queryTranslatorQp" />
+				<ref bean="associatedResultQp"/>
+				<ref bean="queryExecutorQp" />
+				<!-- Result paging loop -->
+				<bean class="edu.utah.further.core.chain.PagingRequestProcessorImpl"
+					p:pageSize="200" p:sourceAttr-ref="queryResultAttr"
+					p:pagingControllerAttr-ref="pagingControllerAttr">
+					<property name="iterableType">
+						<util:constant
+							static-field="edu.utah.further.core.api.collections.page.IterableType.SCROLLABLE_RESULTS" />
+					</property>
+					<property name="mainLoop">
+						<list>
+							<ref bean="resultTranslatorQp" />
+							<ref bean="persistenceRp" />
+							<ref bean="pageFinalizerHibernateQp" /> <!-- FUR-1135, FUR-1286 -->
+						</list>
+					</property>
+					<property name="pagerFactory">
+						<bean
+							class="edu.utah.further.core.util.collections.page.DefaultPagerFactory">
+							<property name="providers">
+								<list>
+									<ref bean="pagingProviderHibernate" />
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
 				<ref bean="mockFinalizerQp" />
 			</list>
 		</property>
 	</bean>
 
-	<!-- =========================================== -->
-	<!-- Life cycle services                         -->
-	<!-- =========================================== -->
-	
-	<!--
-		Various data query and miscellaneous processors. Note: these beans
-		might need be of prototype-scope if used more than once in a query
-		life cycle
-	-->
-
-	<!-- Sleeps for a random number of seconds in the range [min,max] -->
-	<bean id="randomSleep" scope="prototype"
-		class="edu.utah.further.core.chain.RandomSleepRequestProcessor">
-		<constructor-arg index="0" value="3" /> <!-- min -->
-		<constructor-arg index="1" value="10" /> <!-- max -->
+	<!-- Count query flow -->
+	<bean id="countQueryLifeCycle" class="edu.utah.further.ds.impl.lifecycle.DataQueryLifeCycle">
+		<property name="metadataRetriever" ref="metaDataService" />
+		<property name="requestProcessors">
+			<list>
+				<ref bean="initializerQp" />
+				<ref bean="queryTranslatorQp" />
+				<ref bean="queryExecutorQp" />
+				<ref bean="countFinalizerQp" />
+			</list>
+		</property>
 	</bean>
+
+	<!-- Initializer -->
+
+	<bean id="initializerQp"
+		class="edu.utah.further.ds.impl.service.query.processor.InitializerQp"
+		p:delegate-ref="defaultInitializer" scope="prototype" />
+
+	<!-- Preconfigured/Named attributes for request chain -->
+	<util:map id="namedAttributes" key-type="edu.utah.further.ds.api.util.AttributeName">
+		<entry key="SESSION_FACTORY" value-ref="sessionFactory" />
+		<entry key="SEARCH_QUERY_PKG" value="edu.utah.further.ds.omop.v2.domain" />
+		<entry key="RESULT_CONTEXT" value-ref="resultContext" />
+		<entry key="UNMARSHAL_PKG" value="edu.utah.further.ds.further.model.impl.domain" />
+		<entry key="RESULT_TRANSLATION" value="result/frtCall.xq" />
+		<entry key="QUERY_TRANSLATION" value="query/fqtCall.xq" />
+		<entry key="QUERY_SCHEMA"
+			value="edu/utah/further/core/query/schema/further-searchquery-1.0.xsd" />
+	</util:map>
+
+	<bean id="defaultInitializer"
+		class="edu.utah.further.ds.api.service.query.logic.DefaultInitializer">
+		<property name="namedAttributes" ref="namedAttributes" />
+		<property name="answerableService" ref="answerableService" />
+	</bean>
+
+	<bean id="resultContext" class="edu.utah.further.fqe.ds.api.to.ResultContextToImpl"
+		scope="prototype">
+		<property name="rootEntityClass"
+			value="edu.utah.further.ds.omop.model.v2.domain.Person" />
+		<property name="transferObjectClass"
+			value="edu.utah.further.ds.omop.model.v2.domain.Person" />
+	</bean>
+
+	<!-- Wired with unmarshal result attribute as this will come after Result 
+		Translator. This class will persist the translated results to the analytical 
+		model. -->
+
+	<bean id="persisterCreate"
+		class="edu.utah.further.ds.impl.service.query.logic.PersisterCreateImpl" />
+
+	<bean id="persistenceRp"
+		class="edu.utah.further.ds.impl.service.query.processor.PersistenceQp"
+		scope="prototype" p:sourceAttr-ref="unmarshallResultAttr"
+		p:resultAttr-ref="queryResultAttr" p:delegate-ref="persisterCreate" />
 
 </beans>

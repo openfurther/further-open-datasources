@@ -61,10 +61,10 @@
 		<!-- Add default property values here. Can be overridden by the file specified 
 			by persistent-id -->
 		<!-- TODO: Change namespaceId to real namespace id -->
-		<prop key="ds.namespaceId">3</prop>
+		<prop key="ds.namespaceId"></prop>
 		<prop key="ds.name">OMOP Adapter</prop>
 		<prop key="ds.description">Generic OMOP Data Source Adapter</prop>
-		<prop key="ds.status">INACTIVE</prop>
+		<prop key="ds.status">ACTIVE</prop>
 
 		<!-- ################################## -->
 		<!-- Database configuration -->
@@ -112,71 +112,115 @@
 		<!--C3P0 connection pool config -->
 		<!-- ============================ -->
 
+		<!-- ============================ -->
+		<!--C3P0 connection pool config -->
+		<!-- ============================ -->
+
 		<!-- References for setting parameter values: http://www.hibernate.org/214.html -->
 		<!-- http://forum.java.sun.com/thread.jspa?threadID=691105&tstart=0 -->
 		<!-- Times are in seconds. -->
-		<prop key="c3p0.initialPoolSize"></prop>
-		<prop key="c3p0.minPoolSize"></prop>
-		<prop key="c3p0.maxPoolSize"></prop>
+		<prop key="c3p0.initialPoolSize">5</prop>
+		<prop key="c3p0.minPoolSize">5</prop>
+		<prop key="c3p0.maxPoolSize">15</prop>
 		<prop key="c3p0.maxStatements">50</prop>
 		<prop key="c3p0.acquireRetryAttempts">30</prop>
-		<prop key="c3p0.acquireIncrement"></prop>
+		<prop key="c3p0.acquireIncrement">5</prop>
 		<prop key="c3p0.testConnectionOnCheckin">true</prop>
-		<prop key="c3p0.preferredTestQuery"></prop>
+		<!-- Timeout: [1] set it to 100, if that doesn't work, [2] set it to 10. -->
 		<prop key="c3p0.idleConnectionTestPeriod">150</prop>
 		<prop key="c3p0.maxIdleTime">1800</prop>
+		<prop key="c3p0.preferredTestQuery"></prop>
 
-		<!-- Request Chain Unmarshalling Attr -->
-		<prop key="edu.utah.further.ds.api.util.AttributeName.UNMARSHAL_PKG">edu.utah.further.fqe.model.impl.converter</prop>
-		<prop key="edu.utah.further.ds.api.util.AttributeName.RESULT_TRANSLATION">REPLACE_ME</prop>
-		<prop key="edu.utah.further.ds.api.util.AttributeName.RESULT_SCHEMA">REPLACE_ME</prop>
-		<prop key="edu.utah.further.ds.api.util.AttributeName.QUERY_SCHEMA">edu/utah/further/core/query/schema/further-searchquery-1.0.xsd
-		</prop>
-
-		<prop key="edu.utah.further.link.master.namespaceId">32774</prop>
 	</osgix:cm-properties>
 
 	<!-- =========================================== -->
 	<!-- Imported OSGi services -->
 	<!-- =========================================== -->
 
+	<!-- ##################### -->
+	<!-- Core Services -->
+	<!-- ##################### -->
+	
+	<!-- bean-name is used to filter the correct OSGi service, do not remove 
+		it since there are multiple exports of the same interface (mocks and impls) -->
+
 	<!-- Pooled connection factory configured and started by ActiveMq. See activemq-broker.xml -->
 	<osgi:reference id="pooledConnectionFactory" interface="javax.jms.ConnectionFactory" />
 
-	<!-- ##################### -->
-	<!-- Query Processors -->
-	<!-- ##################### -->
-	<!-- Various data query and miscellaneous processors. Note: these beans 
-		might need be of prototype-scope if used more than once in a query life cycle 
-		(FUR-550). -->
+	<osgi:reference id="pagingProviderHibernate"
+		interface="edu.utah.further.core.api.collections.page.PagingProvider"
+		bean-name="pagingProviderHibernate" />
 
+	<osgi:reference id="answerableService"
+		interface="edu.utah.further.ds.api.service.query.AnswerableService"
+		bean-name="answerableServiceAlways" context-class-loader="service-provider" />
+		
+	<!-- ##################### -->
+	<!-- Query Advice -->
+	<!-- ##################### -->
+		
 	<osgi:reference id="qpMonitorAdvice" bean-name="qpMonitorAdvice"
 		interface="edu.utah.further.ds.api.advice.RequestProcessorAroundAdvice"
 		context-class-loader="service-provider" />
 
-	<!-- bean-name is used to filter the correct OSGi service, do not remove 
-		it since there are multiple exports of the same interface (mocks and impls) -->
+	<!-- ##################### -->
+	<!-- Query Processors -->
+	<!-- ##################### -->
 
-	<osgi:reference id="mockInitializerQp" bean-name="mockInitializerQp"
+	<!--Make sure to specify the context-class-loader="service-provider" attribute 
+		in all QP osgi:reference tags to invoke AOP within the ds-impl bundle (right 
+		now the AOP advice is defined in this bundle, but there could be reusable 
+		aspects in ds-impl in the future; however, there are other reasons to have 
+		a service-provider class loader, e.g. to see system properties required for 
+		a Saxon XPath/XQuery implementation). See also FUR-925. -->
+
+	<!-- Default reusable query translation implementation -->
+	<osgi:reference id="queryTranslatorQp" bean-name="queryTranslatorQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor"
+		context-class-loader="service-provider" />
+
+	<!-- Default reusable query execution implementation -->
+	<osgi:reference id="queryExecutorQp" bean-name="queryExecutorQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor"
+		context-class-loader="service-provider" />
+
+	<!-- Default reusable result translation implementation -->
+	<!-- Reference MUST use this classloader in order to load PatientsTo -->
+	<osgi:reference id="resultTranslatorQp" bean-name="resultTranslatorQp"
 		interface="edu.utah.further.core.api.chain.RequestProcessor" />
 
-	<osgi:reference id="mockValidatorQp" bean-name="mockValidatorQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
+	<!-- Default reusable result set page finalizer -->
+	<osgi:reference id="pageFinalizerHibernateQp" bean-name="pageFinalizerHibernateQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor"
+		context-class-loader="service-provider" />
 
-	<osgi:reference id="mockQueryTranslatorQp" bean-name="mockQueryTranslatorQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
-
-	<osgi:reference id="mockExecutionQp" bean-name="mockExecutionQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
-
-	<osgi:reference id="mockResultTranslatorQp" bean-name="mockResultTranslatorQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor" />
-
+	<!-- Mock query finalization implementation. TODO FUR-697: Replace with 
+		real implementation -->
 	<osgi:reference id="mockFinalizerQp" bean-name="mockFinalizerQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor"
+		context-class-loader="service-provider" />
+
+	<osgi:reference id="countFinalizerQp" bean-name="countFinalizerQp"
+		interface="edu.utah.further.core.api.chain.RequestProcessor"
+		context-class-loader="service-provider" />
+
+	<!-- Default reusable associated result QP implementation -->
+	<osgi:reference id="associatedResultQp" bean-name="associatedResultQp"
 		interface="edu.utah.further.core.api.chain.RequestProcessor" />
 
-	<!-- For sleep request processor -->
-	<osgi:reference id="randomUtilService"
-		interface="edu.utah.further.core.util.math.random.RandomUtilService" />
+	<!-- ########################### -->
+	<!-- Analytical Model References -->
+	<!-- ########################### -->
+
+	<!-- In Memory DB Dao reference to analytical model with i2b2-model in it's 
+		session -->
+	<osgi:reference id="inMemoryDao" bean-name="inMemoryDao"
+		interface="edu.utah.further.core.api.data.Dao" context-class-loader="service-provider" />
+
+	<!--In Memory DB Transaction Template for transactions -->
+	<osgi:reference id="inMemoryTransactionTemplate"
+		bean-name="inMemoryTransactionTemplate"
+		interface="org.springframework.transaction.support.TransactionTemplate"
+		context-class-loader="service-provider" />
 
 </beans>
