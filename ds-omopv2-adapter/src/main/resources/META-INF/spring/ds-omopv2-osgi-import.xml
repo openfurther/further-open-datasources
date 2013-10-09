@@ -181,11 +181,10 @@
 
 	<!-- Default reusable query execution implementation -->
 	<osgi:reference id="queryExecutorQp" bean-name="queryExecutorQp"
-		interface="edu.utah.further.core.api.chain.RequestProcessor"
-		context-class-loader="service-provider" />
+		interface="edu.utah.further.core.api.chain.RequestProcessor" />
 
 	<!-- Default reusable result translation implementation -->
-	<!-- Reference MUST use this classloader in order to load PatientsTo -->
+	
 	<osgi:reference id="resultTranslatorQp" bean-name="resultTranslatorQp"
 		interface="edu.utah.further.core.api.chain.RequestProcessor" />
 
