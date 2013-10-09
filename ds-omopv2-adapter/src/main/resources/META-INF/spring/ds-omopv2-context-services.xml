@@ -123,13 +123,15 @@
 	<!-- Preconfigured/Named attributes for request chain -->
 	<util:map id="namedAttributes" key-type="edu.utah.further.ds.api.util.AttributeName">
 		<entry key="SESSION_FACTORY" value-ref="sessionFactory" />
-		<entry key="SEARCH_QUERY_PKG" value="edu.utah.further.ds.omop.v2.domain" />
+		<entry key="SEARCH_QUERY_PKG" value="edu.utah.further.ds.omop.model.v2.domain" />
 		<entry key="RESULT_CONTEXT" value-ref="resultContext" />
 		<entry key="UNMARSHAL_PKG" value="edu.utah.further.ds.further.model.impl.domain" />
 		<entry key="RESULT_TRANSLATION" value="result/frtCall.xq" />
 		<entry key="QUERY_TRANSLATION" value="query/fqtCall.xq" />
 		<entry key="QUERY_SCHEMA"
 			value="edu/utah/further/core/query/schema/further-searchquery-1.0.xsd" />
+		<entry key="DS_TYPE"
+			value="#{T(edu.utah.further.ds.api.util.DatasourceType).DATABASE}" />
 	</util:map>
 
 	<bean id="defaultInitializer"
