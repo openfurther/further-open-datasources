@@ -52,13 +52,7 @@
 			<artifactId>ds-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>edu.utah.further.core</groupId>
-			<artifactId>core-qunit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
+		
 	</dependencies>
 
 	<!-- ================ -->
