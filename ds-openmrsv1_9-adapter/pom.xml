@@ -96,7 +96,7 @@
 			edu.utah.further.ds.jms.lifecycle,
 			edu.utah.further.ds.impl.advice,
 			edu.utah.further.ds.jms.service.query.processor,
-			edu.utah.further.ds.omop.model.v2.domain,
+			edu.utah.further.ds.openmrs.model.v1_9.domain,
 			edu.utah.further.ds.further.model.impl.domain,
 			edu.utah.further.core.api.chain,
 			edu.utah.further.core.api.context,
