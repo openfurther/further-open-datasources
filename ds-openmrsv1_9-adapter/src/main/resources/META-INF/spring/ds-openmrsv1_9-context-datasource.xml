@@ -36,7 +36,7 @@
 	<!-- =========================================== -->
 
 	<!-- openmrs v1_9 Data source -->
-	<bean id="dataSource" class="com.mchange.v1_9.c3p0.ComboPooledDataSource">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="dataSourceName" value="${datasource.name}" />
 		<property name="driverClass" value="${datasource.driver}" />
 		<property name="jdbcUrl" value="${datasource.url}" />
