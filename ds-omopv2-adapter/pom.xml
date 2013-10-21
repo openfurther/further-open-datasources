@@ -16,7 +16,7 @@
 	<!-- =========================================== -->
 
 	<properties>
-		<shortName>ihc</shortName>
+		<shortName>adapter.omopv2</shortName>
 		<further.osgi.import.pkg>
 			javassist.util.proxy,
 			net.sf.cglib.proxy,
