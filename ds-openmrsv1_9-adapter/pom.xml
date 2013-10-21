@@ -22,7 +22,7 @@
 			net.sf.cglib.core,
 			net.sf.cglib.reflect,
 			com.mchange.v2.c3p0,
-			oracle.jdbc;resolution:=optional,
+			com.mysql.jdbc;resolution:=optional,
 			javax.jms,
 			org.hibernate,
 			org.hibernate.annotations,
