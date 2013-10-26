@@ -50,27 +50,27 @@
 
 	<!-- Encryptable property placeholder configurer -->
 	<bean parent="propertiesEncryptor">
-		<property name="properties" ref="dsOmopv2" />
+		<property name="properties" ref="dsOpenMRSv1_9" />
 	</bean>
 
 	<!-- Create an alias for initializer properties autowiring -->
 	<alias name="dsOmopv2" alias="dsProperties" />
 
 	<!-- Configuration Admin entry -->
-	<osgix:cm-properties id="dsOmopv2" persistent-id="further.ds.omopv2">
+	<osgix:cm-properties id="dsOpenMRSv1_9" persistent-id="further.ds.openmrsv1_9">
 		<!-- Add default property values here. Can be overridden by the file specified 
 			by persistent-id -->
 		<!-- TODO: Change namespaceId to real namespace id -->
 		<prop key="ds.namespaceId"></prop>
-		<prop key="ds.name">OMOPv2</prop>
-		<prop key="ds.description">Generic OMOP v2 Data Source Adapter</prop>
+		<prop key="ds.name">OpenMRSv1_9</prop>
+		<prop key="ds.description">Generic OpenMRS v1.9 Data Source Adapter</prop>
 		<prop key="ds.status">ACTIVE</prop>
 
 		<!-- ################################## -->
 		<!-- Database configuration -->
 		<!-- ################################## -->
 
-		<prop key="datasource.name">ds-omopv2-datasource</prop>
+		<prop key="datasource.name">ds-openmrsv1_9-datasource</prop>
 		<prop key="datasource.url"></prop>
 		<prop key="datasource.driver"></prop>
 		<prop key="datasource.user"></prop>
@@ -81,14 +81,7 @@
 			https://forum.hibernate.org/viewtopic.php?t=927555&highlight=
 		-->
 		<prop key="hibernate.default_schema"></prop>
-
-		<!-- ============================ -->
-		<!-- Oracle config -->
-		<!-- ============================ -->
-
-		<prop key="oracle.net.readTimeout">2000</prop>
-		<prop key="oracle.net.connectTimeout">2000</prop>
-
+		
 		<!-- ################################## -->
 		<!-- Hibernate configuration -->
 		<!-- ################################## -->
@@ -103,10 +96,8 @@
 		<prop key="hibernate.jdbc.batch_size">20</prop>
 
 		<!-- Session factory configuration -->
-		<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate3.SpringSessionContext
-		</prop>
-		<prop key="hibernate.transaction.factory_class">org.springframework.orm.hibernate3.SpringTransactionFactory
-		</prop>
+		<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate3.SpringSessionContext</prop>
+		<prop key="hibernate.transaction.factory_class">org.springframework.orm.hibernate3.SpringTransactionFactory</prop>
 
 		<!-- ============================ -->
 		<!--C3P0 connection pool config -->

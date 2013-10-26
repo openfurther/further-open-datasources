@@ -6,24 +6,24 @@
 		<artifactId>ds-adapters-open</artifactId>
 		<version>1.4.0-SNAPSHOT</version>
 	</parent>
+	<artifactId>ds-openmrsv1_9-adapter</artifactId>
 	<packaging>bundle</packaging>
-	<artifactId>ds-omopv2-adapter</artifactId>
-	<name>OMOP v2 Data Source Adapter</name>
-	<description>OMOP v2 Data Source Adapter</description>
+	<name>OpenMRS v1.9 Data Source Adapter</name>
+	<description>OpenMRS v1.9 Data Source Adapter</description>
 
 	<!-- =========================================== -->
 	<!-- Externalized properties -->
 	<!-- =========================================== -->
 
 	<properties>
-		<shortName>adapter.omopv2</shortName>
+		<shortName>adapter.openmrsv1_9</shortName>
 		<further.osgi.import.pkg>
 			javassist.util.proxy,
 			net.sf.cglib.proxy,
 			net.sf.cglib.core,
 			net.sf.cglib.reflect,
 			com.mchange.v2.c3p0,
-			oracle.jdbc;resolution:=optional,
+			com.mysql.jdbc;resolution:=optional,
 			javax.jms,
 			org.hibernate,
 			org.hibernate.annotations,
@@ -97,7 +97,7 @@
 			edu.utah.further.ds.jms.lifecycle,
 			edu.utah.further.ds.impl.advice,
 			edu.utah.further.ds.jms.service.query.processor,
-			edu.utah.further.ds.omop.model.v2.domain,
+			edu.utah.further.ds.openmrs.model.v1_9.domain,
 			edu.utah.further.ds.further.model.impl.domain,
 			edu.utah.further.core.api.chain,
 			edu.utah.further.core.api.context,
@@ -119,7 +119,14 @@
 
 		<dependency>
 			<groupId>edu.utah.further.ds</groupId>
-			<artifactId>ds-omop</artifactId>
+			<artifactId>ds-openmrs</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.java.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>

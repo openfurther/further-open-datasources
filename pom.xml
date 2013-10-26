@@ -61,6 +61,7 @@
 
 	<modules>
 		<module>ds-omopv2-adapter</module>
+		<module>ds-openmrsv1_9-adapter</module>
 	</modules>
 
 </project>

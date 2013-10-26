@@ -32,10 +32,10 @@
     ">
 
 	<!-- =========================================== -->
-	<!-- Data Layer - OMOP v2 -->
+	<!-- Data Layer - openmrs v1_9 -->
 	<!-- =========================================== -->
 
-	<!-- OMOP V2 Data source -->
+	<!-- openmrs v1_9 Data source -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="dataSourceName" value="${datasource.name}" />
 		<property name="driverClass" value="${datasource.driver}" />
@@ -53,11 +53,6 @@
 			<props>
 				<prop key="user">${datasource.user}</prop>
 				<prop key="password">${datasource.password}</prop>
-				<!-- ################################## -->
-				<!-- Oracle configuration -->
-				<!-- ################################## -->
-				<prop key="oracle.net.READ_TIMEOUT">${oracle.net.readTimeout}</prop>
-				<prop key="oracle.net.CONNECT_TIMEOUT">${oracle.net.connectTimeout}</prop>
 			</props>
 		</property>
 	</bean>
@@ -97,19 +92,15 @@
 			<!-- May need to be replaced by a edu.utah.further.core.util.io.ResourceMatchingFactoryBean 
 				factory bean if this list gets too large. -->
 			<list>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ConditionEra</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ConditionOccurrence</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ConditionOccurrenceRef</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.Observation</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ObservationPeriod</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ObservationTypeRef</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.DrugEra</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.DrugExposure</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.DrugExposureRef</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.Person</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.VisitOccurrence</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ProcedureOccurrence</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ProcedureOccurrenceRef</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.DrugOrder</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Encounter</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.EncounterType</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Observation</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Order</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.OrderType</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Patient</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Person</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.PersonAttribute</value>
 			</list>
 		</property>
 	</bean>

@@ -19,23 +19,33 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="
-    http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-    http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-    http://www.springframework.org/schema/util
-    http://www.springframework.org/schema/util/spring-util-3.0.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
 	http://www.springframework.org/schema/aop
 	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-    ">
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/jee
+	http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+	">
+
+    
+    <!-- =========================================== -->
+	<!-- Properties files -->
+	<!-- =========================================== -->
+
+	<!-- Property file locations -->
+	<context:property-placeholder location="classpath:*.properties" />
 
 	<!-- =========================================== -->
-	<!-- Data Layer - OMOP v2 -->
+	<!-- Data Layer - openmrs v1_9 -->
 	<!-- =========================================== -->
 
-	<!-- OMOP V2 Data source -->
+	<!-- openmrs v1_9 Data source -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="dataSourceName" value="${datasource.name}" />
 		<property name="driverClass" value="${datasource.driver}" />
@@ -53,11 +63,6 @@
 			<props>
 				<prop key="user">${datasource.user}</prop>
 				<prop key="password">${datasource.password}</prop>
-				<!-- ################################## -->
-				<!-- Oracle configuration -->
-				<!-- ################################## -->
-				<prop key="oracle.net.READ_TIMEOUT">${oracle.net.readTimeout}</prop>
-				<prop key="oracle.net.CONNECT_TIMEOUT">${oracle.net.connectTimeout}</prop>
 			</props>
 		</property>
 	</bean>
@@ -75,7 +80,6 @@
 				<!-- ################################## -->
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 			</props>
 		</property>
 
@@ -97,19 +101,15 @@
 			<!-- May need to be replaced by a edu.utah.further.core.util.io.ResourceMatchingFactoryBean 
 				factory bean if this list gets too large. -->
 			<list>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ConditionEra</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ConditionOccurrence</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ConditionOccurrenceRef</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.Observation</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ObservationPeriod</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ObservationTypeRef</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.DrugEra</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.DrugExposure</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.DrugExposureRef</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.Person</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.VisitOccurrence</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ProcedureOccurrence</value>
-				<value>edu.utah.further.ds.omop.model.v2.domain.ProcedureOccurrenceRef</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.DrugOrder</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Encounter</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.EncounterType</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Observation</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Order</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.OrderType</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Patient</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.Person</value>
+				<value>edu.utah.further.ds.openmrs.model.v1_9.domain.PersonAttribute</value>
 			</list>
 		</property>
 	</bean>
