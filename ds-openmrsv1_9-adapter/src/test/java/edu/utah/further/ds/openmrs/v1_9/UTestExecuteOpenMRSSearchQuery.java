@@ -24,6 +24,7 @@ import java.lang.invoke.MethodHandles;
 import javax.xml.bind.JAXBException;
 
 import org.hibernate.SessionFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -55,6 +56,7 @@ import edu.utah.further.fqe.impl.domain.SearchQueryEntity;
  * @author N. Dustin Schultz {@code <dustin.schultz@utah.edu>}
  * @version Oct 25, 2013
  */
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations =
 { "/ds-openmrsv1_9-context.xml" })
