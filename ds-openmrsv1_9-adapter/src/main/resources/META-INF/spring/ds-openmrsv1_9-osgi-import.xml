@@ -54,7 +54,7 @@
 	</bean>
 
 	<!-- Create an alias for initializer properties autowiring -->
-	<alias name="dsOmopv2" alias="dsProperties" />
+	<alias name="dsOpenMRSv1_9" alias="dsProperties" />
 
 	<!-- Configuration Admin entry -->
 	<osgix:cm-properties id="dsOpenMRSv1_9" persistent-id="further.ds.openmrsv1_9">
