@@ -80,6 +80,7 @@
 					</property>
 					<property name="mainLoop">
 						<list>
+							<ref bean="hibernateResultListRefresher"/>
 							<ref bean="resultTranslatorQp" />
 							<ref bean="persistenceRp" />
 							<ref bean="pageFinalizerHibernateQp" /> <!-- FUR-1135, FUR-1286 -->

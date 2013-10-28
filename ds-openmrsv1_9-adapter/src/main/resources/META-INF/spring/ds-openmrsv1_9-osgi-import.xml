@@ -195,6 +195,10 @@
 	<osgi:reference id="associatedResultQp" bean-name="associatedResultQp"
 		interface="edu.utah.further.core.api.chain.RequestProcessor" />
 
+	<osgi:reference id="hibernateResultListRefresher"
+		bean-name="hibernateResultListRefresher" 
+		interface="edu.utah.further.core.api.chain.RequestProcessor"/>
+
 	<!-- ########################### -->
 	<!-- Analytical Model References -->
 	<!-- ########################### -->
