@@ -103,10 +103,6 @@
 		<!--C3P0 connection pool config -->
 		<!-- ============================ -->
 
-		<!-- ============================ -->
-		<!--C3P0 connection pool config -->
-		<!-- ============================ -->
-
 		<!-- References for setting parameter values: http://www.hibernate.org/214.html -->
 		<!-- http://forum.java.sun.com/thread.jspa?threadID=691105&tstart=0 -->
 		<!-- Times are in seconds. -->
