@@ -10,16 +10,15 @@
 		<custodian lastName="Mo" firstName="Peter"/>
 		<contextOfUse>
 			<topical preferredLabel="Demographics"/>
-			<topical preferredLabel="Laboratory Results"/>
-			<topical preferredLabel="Encounters"/>
-			<topical preferredLabel="Medication Orders"/>
 			<topical preferredLabel="Diagnoses"/>
+			<topical preferredLabel="Laboratory Results"/>
+			<topical preferredLabel="Medication Orders"/>
 			<topical preferredLabel="Procedures"/>
 		</contextOfUse>
 	</header>
 	<body name="OMOPv2" dataSourceType="RelationalDatabase">
-		<description>Observational Medical Outcomes Partnership Version 2</description>
-		<location name="University of Utah"/>
+		<description>The Schultz Cancer Repository houses various cancer centric health information in an OMOP-V2 format.</description>
+		<location name="Schultz Cancer Repository"/>
 		<dataStewards>
 			<dataSteward lastName="Mo" firstName="Peter" title="Data Architect">
 				<contact contactTypeContext="Work" contactType="email" contactString="peter.mo@utah.edu"/>
@@ -27,9 +26,9 @@
 			</dataSteward>
 		</dataStewards>
 		<contributingSystems>	
-			<system name="University of Utah">
+			<system name="Observational Medical Outcomes Partnership">
 				<systemContext>
-					<spatial preferredLabel="Observational Medical Outcomes Partnership"/>
+					<spatial preferredLabel="Schultz Cancer Repository"/>
 					<temporal startDateValue="2013" startDateUnits="Year" endDateValue="present" endDateUnits="Year"/>
 				</systemContext>
 			</system>

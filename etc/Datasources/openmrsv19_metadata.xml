@@ -10,16 +10,15 @@
 		<custodian lastName="Mo" firstName="Peter"/>
 		<contextOfUse>
 			<topical preferredLabel="Demographics"/>
-			<topical preferredLabel="Laboratory Results"/>
-			<topical preferredLabel="Encounters"/>
-			<topical preferredLabel="Medication Orders"/>
 			<topical preferredLabel="Diagnoses"/>
+			<topical preferredLabel="Laboratory Results"/>
+			<topical preferredLabel="Medication Orders"/>
 			<topical preferredLabel="Procedures"/>
 		</contextOfUse>
 	</header>
 	<body name="OpenMRS_V1.9" dataSourceType="RelationalDatabase">
-		<description>OpenMRS Version 1.9</description>
-		<location name="University of Utah"/>
+		<description>Schultz Healthcare Systems store health information using OpenMRS Version 1.9.</description>
+		<location name="Schultz Healthcare Systems"/>
 		<dataStewards>
 			<dataSteward lastName="Mo" firstName="Peter" title="Data Architect">
 				<contact contactTypeContext="Work" contactType="email" contactString="peter.mo@utah.edu"/>
