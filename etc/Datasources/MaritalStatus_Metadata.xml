@@ -2,10 +2,9 @@
    <h2>Definition</h2>
    <p>Marital Status - A value representing the domestic partnership status of a person.</p>
    <h2>Datasources</h2>
-   <p>Age is available from the following datasources: </p>
+   <p>Available from the following datasources: </p>
    <ul>
 	<li>Schultz Cancer Repository (OMOP data source)</li>
 	<li>Schultz Healthcare Systems (OpenMRS data source)</li>
-
    </ul>
 </div>
