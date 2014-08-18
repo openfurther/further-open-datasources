@@ -31,6 +31,6 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="edu.utah.further.ds.adapter.openmrsv1_9"/>
+	<context:component-scan base-package="edu.utah.further.openmrs.model.v1_9.domain"/>
 
 </beans>

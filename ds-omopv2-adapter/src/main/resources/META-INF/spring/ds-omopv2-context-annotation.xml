@@ -31,6 +31,6 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="edu.utah.further.ds.adapter.omopv2" />
+	<context:component-scan base-package="edu.utah.further.ds.omop.model.v2.domain,edu.utah.further.ds.omop.model.v4.domain" />
 
 </beans>
