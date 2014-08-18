@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="0.0" encoding="UTF-8"?>
 <!--
 
     Copyright (C) [2013] [The FURTHeR Project]
@@ -31,8 +31,6 @@
 
 	<context:annotation-config />
 
-	<!-- Local beans 
-	<context:component-scan base-package="edu.utah.further.ds.adapter.openmrsv1_9" />
-	-->
+	<context:component-scan base-package="edu.utah.further.ds.adapter.openmrsv1_9"/>
 
 </beans>

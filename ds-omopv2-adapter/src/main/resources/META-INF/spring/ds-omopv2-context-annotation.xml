@@ -31,8 +31,6 @@
 
 	<context:annotation-config />
 
-	<!-- Local beans 
 	<context:component-scan base-package="edu.utah.further.ds.adapter.omopv2" />
-	-->
 
 </beans>
