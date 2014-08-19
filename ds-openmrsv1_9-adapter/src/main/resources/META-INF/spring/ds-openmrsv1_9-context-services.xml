@@ -157,9 +157,9 @@
 	<bean id="resultContext" class="edu.utah.further.fqe.ds.api.to.ResultContextToImpl"
 		scope="prototype">
 		<property name="rootEntityClass"
-			value="edu.utah.further.ds.openmrs.model.v1_9.domain.Person" />
+			value="edu.utah.further.ds.further.model.impl.domain.Person" />
 		<property name="transferObjectClass"
-			value="edu.utah.further.ds.openmrs.model.v1_9.domain.Person" />
+			value="edu.utah.further.ds.further.model.impl.domain.Person" />
 	</bean>
 
 	<!-- Wired with unmarshal result attribute as this will come after Result 
