@@ -62,7 +62,7 @@
 			by persistent-id -->
 		<!-- TODO: Change namespaceId to real namespace id -->
 		<prop key="ds.namespaceId"></prop>
-		<prop key="ds.name">OMOPv2</prop>
+		<prop key="ds.name">OMOP-v2</prop>
 		<prop key="ds.description">Generic OMOP v2 Data Source Adapter</prop>
 		<prop key="ds.status">ACTIVE</prop>
 
