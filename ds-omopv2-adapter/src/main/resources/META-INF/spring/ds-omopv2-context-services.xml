@@ -133,7 +133,7 @@
 	<!-- Preconfigured/Named attributes for request chain -->
 	<util:map id="namedAttributes" key-type="edu.utah.further.ds.api.util.AttributeName">
 		<entry key="SESSION_FACTORY" value-ref="sessionFactory" />
-		<entry key="SEARCH_QUERY_PKG" value="edu.utah.further.ds.further.model.impl.domain" />
+		<entry key="SEARCH_QUERY_PKG" value="edu.utah.further.ds.omop.model.v2.domain" />
 		<entry key="RESULT_CONTEXT" value-ref="resultContext" />
 		<entry key="RESULT_MARSHAL_PKGS" value-ref="resultMarshalPackages" />
 		<entry key="RESULT_UNMARSHAL_PKGS" value-ref="resultUnmarshalPackages" />
