@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>edu.utah.further.ds</groupId>
 		<artifactId>ds-adapters-open</artifactId>
-		<version>1.4.1-SNAPSHOT</version>
+		<version>1.4.1</version>
 	</parent>
 	<artifactId>ds-openmrsv1_9-adapter</artifactId>
 	<packaging>bundle</packaging>
