@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>edu.utah.further</groupId>
 		<artifactId>further</artifactId>
-		<version>1.4.1</version>
+		<version>1.4.1-SNAPSHOT</version>
 	</parent>
         <groupId>edu.utah.further.osgi</groupId>
 	<artifactId>osgi-datasources-features</artifactId>
