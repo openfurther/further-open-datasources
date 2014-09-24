@@ -10,7 +10,7 @@
         <version>1.4.1</version>
 	<name>OMOP v2 Data Source Adapter</name>
 	<description>OMOP v2 Data Source Adapter</description>
-   
+
 	<!-- =========================================== -->
 	<!-- Externalized properties -->
 	<!-- =========================================== -->
