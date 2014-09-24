@@ -11,7 +11,7 @@
 	<packaging>pom</packaging>
 	<name>Open Data Source Adapters</name>
 	<description>Open Data Source Adapters</description>
-
+    
 	<dependencies>
 
 		<!-- ########################## -->

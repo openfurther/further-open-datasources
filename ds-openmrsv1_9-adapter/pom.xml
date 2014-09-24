@@ -10,7 +10,7 @@
 	<packaging>bundle</packaging>
 	<name>OpenMRS v1.9 Data Source Adapter</name>
 	<description>OpenMRS v1.9 Data Source Adapter</description>
-
+    
 	<!-- =========================================== -->
 	<!-- Externalized properties -->
 	<!-- =========================================== -->
