@@ -14,7 +14,7 @@
 	<!-- =========================================== -->
 	<!-- Externalized properties -->
 	<!-- =========================================== -->
-
+   
 	<properties>
 		<shortName>adapter.openmrsv1_9</shortName>
 		<further.osgi.import.pkg>
