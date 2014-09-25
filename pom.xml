@@ -7,11 +7,11 @@
 	</parent>
         <groupId>edu.utah.further.osgi</groupId>
 	<artifactId>osgi-datasources-features</artifactId>
-        <version>1.4.1</version>
+  <version>1.4.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Open Data Source Adapters</name>
 	<description>Open Data Source Adapters</description>
- 
+
 	<dependencies>
 
 		<!-- ########################## -->
@@ -63,15 +63,5 @@
 		<module>ds-omopv2-adapter</module>
 		<module>ds-openmrsv1_9-adapter</module>
 	</modules>
-
-	<!-- =========================================== -->
-        <!-- Version control information -->
-        <!-- =========================================== -->
-
-        <scm>
-             <connection>scm:git:https://github.com/openfurther/further-open-datasources.git</connection>
-             <developerConnection>scm:git:https://github.com/openfurther/further-open-datasources.git</developerConnection>
-             <url>https://github.com/openfurther/further-open-datasources</url>
-        </scm>
 
 </project>
