@@ -64,4 +64,14 @@
 		<module>ds-openmrsv1_9-adapter</module>
 	</modules>
 
+        <!-- =========================================== -->
+        <!-- Version control information -->
+        <!-- =========================================== -->
+
+        <scm>
+                <connection>scm:git:https://github.com/openfurther/further-open-datasources.git</connection>
+                <developerConnection>scm:git:https://github.com/openfurther/further-open-datasources.git</developerConnection>
+                <url>https://github.com/openfurther/further-open-datasources</url>
+        </scm>
+
 </project>
