@@ -7,7 +7,7 @@
 	</parent>
 	<packaging>bundle</packaging>
 	<artifactId>ds-omopv2-adapter</artifactId>
-        <version>1.4.1</version>
+        <version>1.4.1-SNAPSHOT</version>
 	<name>OMOP v2 Data Source Adapter</name>
 	<description>OMOP v2 Data Source Adapter</description>
       
